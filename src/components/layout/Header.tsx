@@ -18,15 +18,24 @@ export function Header() {
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
           {navigation.map((item) =>
             item.href === "/services" ? (
-              <details key={item.href} className="service-dropdown relative">
-                <summary
-                  className={`${navLinkClasses} flex cursor-pointer list-none items-center gap-1 [&::-webkit-details-marker]:hidden`}
+              <div key={item.href} className="group/services relative">
+                <Link
+                  href="/services"
+                  className={`${navLinkClasses} flex items-center gap-1`}
+                  aria-haspopup="menu"
                 >
                   {item.label}
-                  <ChevronDown className="services-chevron size-4 transition-transform" aria-hidden="true" />
-                </summary>
+                  <ChevronDown
+                    className="size-4 transition-transform duration-200 group-hover/services:rotate-180 group-focus-within/services:rotate-180"
+                    aria-hidden="true"
+                  />
+                </Link>
 
-                <div className="absolute left-1/2 top-full z-50 w-[780px] -translate-x-1/2 pt-3">
+                <div
+                  className="pointer-events-none invisible absolute left-1/2 top-full z-50 w-[780px] -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition duration-200 group-hover/services:pointer-events-auto group-hover/services:visible group-hover/services:translate-y-0 group-hover/services:opacity-100 group-focus-within/services:pointer-events-auto group-focus-within/services:visible group-focus-within/services:translate-y-0 group-focus-within/services:opacity-100"
+                  role="menu"
+                  aria-label="Services"
+                >
                   <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl dark:border-slate-800 dark:bg-slate-950">
                     <div className="mb-3 flex items-center justify-between border-b border-slate-200 px-2 pb-3 dark:border-slate-800">
                       <div>
@@ -38,6 +47,7 @@ export function Header() {
                       <Link
                         href="/services"
                         className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                        role="menuitem"
                       >
                         View overview
                       </Link>
@@ -48,7 +58,8 @@ export function Header() {
                         <Link
                           key={service.slug}
                           href={`/services/${service.slug}`}
-                          className="rounded-xl px-3 py-2.5 transition hover:bg-slate-100 dark:hover:bg-slate-900"
+                          className="rounded-xl px-3 py-2.5 transition hover:bg-slate-100 focus-visible:bg-slate-100 dark:hover:bg-slate-900 dark:focus-visible:bg-slate-900"
+                          role="menuitem"
                         >
                           <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100">
                             {service.title}
@@ -61,7 +72,7 @@ export function Header() {
                     </div>
                   </div>
                 </div>
-              </details>
+              </div>
             ) : (
               <Link key={item.href} href={item.href} className={navLinkClasses}>
                 {item.label}

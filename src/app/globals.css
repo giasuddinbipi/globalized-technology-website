@@ -45,7 +45,6 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 
-.service-dropdown[open] > summary .services-chevron,
 .mobile-services-details[open] > summary .services-chevron {
   transform: rotate(180deg);
 }

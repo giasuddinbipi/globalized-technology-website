@@ -112,3 +112,12 @@ It should show `https://registry.npmjs.org/`.
 ## Version 5 navigation update
 
 All internal navigation now uses Next.js `Link` for client-side transitions. The browser URL changes for each page, but the document is not fully reloaded. Native mobile menu and theme controls remain unchanged.
+
+
+## Version 6 update
+
+- Desktop Services dropdown opens on hover.
+- Dropdown remains open while the pointer is over its panel.
+- Keyboard focus also opens the dropdown.
+- Clicking Services still opens the services overview page.
+- Mobile navigation behavior is unchanged.
