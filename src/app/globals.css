@@ -1,0 +1,63 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+html.dark {
+  --background: #020617;
+  --foreground: #f8fafc;
+  color-scheme: dark;
+}
+
+::selection {
+  background: #bfdbfe;
+  color: #172554;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Native navigation controls remain usable even when React JavaScript fails to hydrate. */
+details > summary {
+  list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.service-dropdown[open] > summary .services-chevron,
+.mobile-services-details[open] > summary .services-chevron {
+  transform: rotate(180deg);
+}
+
+.mobile-close-icon {
+  display: none;
+}
+
+.mobile-nav-details[open] > summary .mobile-menu-icon {
+  display: none;
+}
+
+.mobile-nav-details[open] > summary .mobile-close-icon {
+  display: block;
+}

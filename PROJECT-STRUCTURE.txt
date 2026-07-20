@@ -1,0 +1,34 @@
+it-company-website/
+├── src/
+│   ├── app/
+│   │   ├── services/[slug]/page.tsx   Dynamic service template, statically generated
+│   │   ├── about/page.tsx
+│   │   ├── contact/page.tsx
+│   │   ├── portfolio/page.tsx
+│   │   ├── privacy-policy/page.tsx
+│   │   ├── services/page.tsx
+│   │   ├── solutions/page.tsx
+│   │   ├── support/page.tsx
+│   │   ├── terms/page.tsx
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
+│   ├── components/
+│   │   ├── layout/                   Header and footer
+│   │   ├── ui/                       Reusable UI components
+│   │   ├── ContactForm.tsx
+│   │   ├── CTA.tsx
+│   │   ├── ServiceCard.tsx
+│   │   └── ThemeToggle.tsx
+│   ├── data/
+│   │   ├── services.ts               All service content
+│   │   └── site.ts                   Company/contact configuration
+│   ├── lib/utils.ts
+│   └── types/index.ts
+├── .env.example
+├── next.config.ts                    Static export settings
+├── package.json
+├── README.md                         Setup and customization guide
+└── PROJECT-STRUCTURE.txt
