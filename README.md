@@ -1,4 +1,4 @@
-# Globalized Technology Website
+# Globalized Technology Website — Version 5
 
 A complete static corporate website for Globalized Technology. It includes the official company logo, a light/dark theme toggle, a responsive Services dropdown, 15 reusable service pages, SEO metadata, sitemap, robots file, portfolio examples, support information, and a contact form fallback.
 
@@ -107,3 +107,8 @@ It should show `https://registry.npmjs.org/`.
 - The mobile navigation and nested Services menu are fully interactive.
 - Desktop and mobile service menus close immediately after a service link is selected.
 - Desktop Services also closes on outside click, mouse leave, route change, or Escape.
+
+
+## Version 5 navigation update
+
+All internal navigation now uses Next.js `Link` for client-side transitions. The browser URL changes for each page, but the document is not fully reloaded. Native mobile menu and theme controls remain unchanged.

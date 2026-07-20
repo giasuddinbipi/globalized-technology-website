@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { CTA } from "@/components/CTA";
 import { Container } from "@/components/ui/Container";
@@ -28,7 +29,7 @@ export default function PortfolioPage() {
                 <div><h3 className="text-sm font-bold uppercase tracking-[0.15em] text-blue-600 dark:text-blue-400">Challenge</h3><p className="mt-2 leading-7 text-slate-600 dark:text-slate-300">{project.challenge}</p></div>
                 <div><h3 className="text-sm font-bold uppercase tracking-[0.15em] text-blue-600 dark:text-blue-400">Solution</h3><p className="mt-2 leading-7 text-slate-600 dark:text-slate-300">{project.solution}</p></div>
                 <div><h3 className="text-sm font-bold uppercase tracking-[0.15em] text-blue-600 dark:text-blue-400">Result</h3><p className="mt-2 leading-7 text-slate-600 dark:text-slate-300">{project.result}</p></div>
-                <a href="/contact" className="inline-flex items-center gap-2 font-semibold text-blue-700 dark:text-blue-300">Discuss a similar project <ArrowUpRight className="size-4" /></a>
+                <Link href="/contact" className="inline-flex items-center gap-2 font-semibold text-blue-700 dark:text-blue-300">Discuss a similar project <ArrowUpRight className="size-4" /></Link>
               </div>
             </article>
           ))}

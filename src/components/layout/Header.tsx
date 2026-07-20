@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
+import Link from "next/link";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { navigation } from "@/data/site";
 import { services } from "@/data/services";
@@ -35,19 +35,19 @@ export function Header() {
                           Explore our complete technology portfolio.
                         </p>
                       </div>
-                      <a
-                        href="/services/"
+                      <Link
+                        href="/services"
                         className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400"
                       >
                         View overview
-                      </a>
+                      </Link>
                     </div>
 
                     <div className="grid grid-cols-3 gap-1">
                       {services.map((service) => (
-                        <a
+                        <Link
                           key={service.slug}
-                          href={`/services/${service.slug}/`}
+                          href={`/services/${service.slug}`}
                           className="rounded-xl px-3 py-2.5 transition hover:bg-slate-100 dark:hover:bg-slate-900"
                         >
                           <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100">
@@ -56,16 +56,16 @@ export function Header() {
                           <span className="mt-0.5 block text-xs text-slate-500 dark:text-slate-400">
                             {service.category}
                           </span>
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
                 </div>
               </details>
             ) : (
-              <a key={item.href} href={item.href === "/" ? "/" : `${item.href}/`} className={navLinkClasses}>
+              <Link key={item.href} href={item.href} className={navLinkClasses}>
                 {item.label}
-              </a>
+              </Link>
             ),
           )}
         </nav>
@@ -73,12 +73,12 @@ export function Header() {
         <div className="flex shrink-0 items-center gap-2">
           <ThemeToggle />
 
-          <a
-            href="/contact/"
+          <Link
+            href="/contact"
             className="hidden rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 sm:inline-flex"
           >
             Get a quote
-          </a>
+          </Link>
 
           <details className="mobile-nav-details relative lg:hidden">
             <summary
@@ -100,37 +100,37 @@ export function Header() {
                       </summary>
 
                       <div className="grid gap-1 border-t border-slate-200 p-2 dark:border-slate-800">
-                        <a
-                          href="/services/"
+                        <Link
+                          href="/services"
                           className="rounded-lg bg-blue-50 px-3 py-2.5 text-sm font-semibold text-blue-700 dark:bg-blue-950/40 dark:text-blue-300"
                         >
                           All Services
-                        </a>
+                        </Link>
                         {services.map((service) => (
-                          <a
+                          <Link
                             key={service.slug}
-                            href={`/services/${service.slug}/`}
+                            href={`/services/${service.slug}`}
                             className="rounded-lg px-3 py-2.5 text-sm text-slate-600 hover:bg-slate-100 hover:text-blue-700 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-blue-300"
                           >
                             {service.title}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     </details>
                   ) : (
-                    <a
+                    <Link
                       key={item.href}
-                      href={item.href === "/" ? "/" : `${item.href}/`}
+                      href={item.href}
                       className="rounded-xl px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   ),
                 )}
 
-                <a href="/contact/" className="mt-2 rounded-xl bg-blue-600 px-4 py-3 text-center text-sm font-semibold text-white">
+                <Link href="/contact" className="mt-2 rounded-xl bg-blue-600 px-4 py-3 text-center text-sm font-semibold text-white">
                   Get a quote
-                </a>
+                </Link>
               </Container>
             </div>
           </details>
