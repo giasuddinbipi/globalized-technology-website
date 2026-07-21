@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState, type FocusEvent } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { navigation } from "@/data/site";
 import { services } from "@/data/services";
@@ -10,6 +14,43 @@ const navLinkClasses =
   "rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white";
 
 export function Header() {
+  const pathname = usePathname();
+  const [desktopServicesOpen, setDesktopServicesOpen] = useState(false);
+  const mobileNavRef = useRef<HTMLDetailsElement>(null);
+  const mobileServicesRef = useRef<HTMLDetailsElement>(null);
+
+  function closeAllMenus() {
+    setDesktopServicesOpen(false);
+    mobileNavRef.current?.removeAttribute("open");
+    mobileServicesRef.current?.removeAttribute("open");
+
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      setDesktopServicesOpen(false);
+      mobileNavRef.current?.removeAttribute("open");
+      mobileServicesRef.current?.removeAttribute("open");
+
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [pathname]);
+
+  function handleServicesBlur(event: FocusEvent<HTMLDivElement>) {
+    const nextFocusedElement = event.relatedTarget;
+
+    if (!(nextFocusedElement instanceof Node) || !event.currentTarget.contains(nextFocusedElement)) {
+      setDesktopServicesOpen(false);
+    }
+  }
+
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-950/95">
       <Container className="flex h-18 items-center justify-between gap-3">
@@ -18,21 +59,34 @@ export function Header() {
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
           {navigation.map((item) =>
             item.href === "/services" ? (
-              <div key={item.href} className="group/services relative">
+              <div
+                key={item.href}
+                className="relative"
+                onMouseEnter={() => setDesktopServicesOpen(true)}
+                onMouseLeave={() => setDesktopServicesOpen(false)}
+                onFocusCapture={() => setDesktopServicesOpen(true)}
+                onBlurCapture={handleServicesBlur}
+              >
                 <Link
                   href="/services"
                   className={`${navLinkClasses} flex items-center gap-1`}
                   aria-haspopup="menu"
+                  aria-expanded={desktopServicesOpen}
+                  onClick={closeAllMenus}
                 >
                   {item.label}
                   <ChevronDown
-                    className="size-4 transition-transform duration-200 group-hover/services:rotate-180 group-focus-within/services:rotate-180"
+                    className={`size-4 transition-transform duration-200 ${desktopServicesOpen ? "rotate-180" : ""}`}
                     aria-hidden="true"
                   />
                 </Link>
 
                 <div
-                  className="pointer-events-none invisible absolute left-1/2 top-full z-50 w-[780px] -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition duration-200 group-hover/services:pointer-events-auto group-hover/services:visible group-hover/services:translate-y-0 group-hover/services:opacity-100 group-focus-within/services:pointer-events-auto group-focus-within/services:visible group-focus-within/services:translate-y-0 group-focus-within/services:opacity-100"
+                  className={`absolute left-1/2 top-full z-50 w-[780px] -translate-x-1/2 pt-3 transition duration-200 ${
+                    desktopServicesOpen
+                      ? "pointer-events-auto visible translate-y-0 opacity-100"
+                      : "pointer-events-none invisible translate-y-1 opacity-0"
+                  }`}
                   role="menu"
                   aria-label="Services"
                 >
@@ -48,6 +102,7 @@ export function Header() {
                         href="/services"
                         className="text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400"
                         role="menuitem"
+                        onClick={closeAllMenus}
                       >
                         View overview
                       </Link>
@@ -60,6 +115,7 @@ export function Header() {
                           href={`/services/${service.slug}`}
                           className="rounded-xl px-3 py-2.5 transition hover:bg-slate-100 focus-visible:bg-slate-100 dark:hover:bg-slate-900 dark:focus-visible:bg-slate-900"
                           role="menuitem"
+                          onClick={closeAllMenus}
                         >
                           <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100">
                             {service.title}
@@ -74,7 +130,7 @@ export function Header() {
                 </div>
               </div>
             ) : (
-              <Link key={item.href} href={item.href} className={navLinkClasses}>
+              <Link key={item.href} href={item.href} className={navLinkClasses} onClick={closeAllMenus}>
                 {item.label}
               </Link>
             ),
@@ -87,11 +143,12 @@ export function Header() {
           <Link
             href="/contact"
             className="hidden rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 sm:inline-flex"
+            onClick={closeAllMenus}
           >
             Get a quote
           </Link>
 
-          <details className="mobile-nav-details relative lg:hidden">
+          <details ref={mobileNavRef} className="mobile-nav-details relative lg:hidden">
             <summary
               className="grid size-10 cursor-pointer list-none place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 [&::-webkit-details-marker]:hidden dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
               aria-label="Open or close navigation"
@@ -104,7 +161,11 @@ export function Header() {
               <Container className="grid gap-1 py-4">
                 {navigation.map((item) =>
                   item.href === "/services" ? (
-                    <details key={item.href} className="mobile-services-details rounded-xl border border-slate-200 dark:border-slate-800">
+                    <details
+                      ref={mobileServicesRef}
+                      key={item.href}
+                      className="mobile-services-details rounded-xl border border-slate-200 dark:border-slate-800"
+                    >
                       <summary className="flex cursor-pointer list-none items-center justify-between rounded-xl px-4 py-3 text-sm font-medium text-slate-700 [&::-webkit-details-marker]:hidden dark:text-slate-200">
                         <span>Services</span>
                         <ChevronDown className="services-chevron size-5 transition-transform" aria-hidden="true" />
@@ -114,6 +175,7 @@ export function Header() {
                         <Link
                           href="/services"
                           className="rounded-lg bg-blue-50 px-3 py-2.5 text-sm font-semibold text-blue-700 dark:bg-blue-950/40 dark:text-blue-300"
+                          onClick={closeAllMenus}
                         >
                           All Services
                         </Link>
@@ -122,6 +184,7 @@ export function Header() {
                             key={service.slug}
                             href={`/services/${service.slug}`}
                             className="rounded-lg px-3 py-2.5 text-sm text-slate-600 hover:bg-slate-100 hover:text-blue-700 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-blue-300"
+                            onClick={closeAllMenus}
                           >
                             {service.title}
                           </Link>
@@ -133,13 +196,18 @@ export function Header() {
                       key={item.href}
                       href={item.href}
                       className="rounded-xl px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-900"
+                      onClick={closeAllMenus}
                     >
                       {item.label}
                     </Link>
                   ),
                 )}
 
-                <Link href="/contact" className="mt-2 rounded-xl bg-blue-600 px-4 py-3 text-center text-sm font-semibold text-white">
+                <Link
+                  href="/contact"
+                  className="mt-2 rounded-xl bg-blue-600 px-4 py-3 text-center text-sm font-semibold text-white"
+                  onClick={closeAllMenus}
+                >
                   Get a quote
                 </Link>
               </Container>
