@@ -55,11 +55,6 @@ const themeScript = `
     var dark = theme === 'dark';
     document.documentElement.classList.toggle('dark', dark);
 
-    var themeMeta = document.querySelector('meta[name="theme-color"]');
-    if (themeMeta) {
-      themeMeta.setAttribute('content', dark ? '#020617' : '#ffffff');
-    }
-
     var buttons = document.querySelectorAll('[data-theme-toggle]');
     for (var i = 0; i < buttons.length; i += 1) {
       buttons[i].setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');

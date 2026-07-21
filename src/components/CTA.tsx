@@ -11,7 +11,7 @@ export function CTA() {
             <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight sm:text-4xl">Tell us what your business needs.</h2>
             <p className="mt-4 text-lg leading-8 text-slate-300">Pricing depends on scope, users, infrastructure, support level, and deployment requirements. We will prepare a solution designed for your situation.</p>
           </div>
-          <ButtonLink href="/contact" className="mt-8 bg-white text-slate-950 hover:bg-blue-50 lg:mt-0">Request a consultation</ButtonLink>
+          <ButtonLink href="/contact" className="mt-8 bg-blue text-slate-950 hover:bg-black-50 lg:mt-0">Request a consultation</ButtonLink>
         </div>
       </Container>
     </section>

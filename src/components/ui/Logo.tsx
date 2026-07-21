@@ -6,7 +6,7 @@ export function Logo() {
   return (
     <Link
       href="/"
-      className="group inline-flex shrink-0 items-center rounded-lg bg-white p-1 transition hover:-translate-y-0.5"
+      className="group inline-flex shrink-0 items-center rounded-lg bg-transparent p-1 transition hover:-translate-y-0.5 dark:bg-white"
       aria-label={`${siteConfig.name} home`}
     >
       <Image
