@@ -3,6 +3,7 @@ import "./globals.css";
 import { siteConfig } from "@/data/site";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -126,6 +127,32 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <main>{children}</main>
         <Footer />
+
+      <Script
+  id="tawk-to-live-chat"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{
+    __html: `
+      window.Tawk_API = window.Tawk_API || {};
+      window.Tawk_LoadStart = new Date();
+
+      (function () {
+        var s1 = document.createElement("script");
+        var s0 = document.getElementsByTagName("script")[0];
+
+        s1.async = true;
+        s1.src = "https://embed.tawk.to/6a6344ba8ba7d41d4914c509/1ju9s8uvh";
+        s1.charset = "UTF-8";
+        s1.setAttribute("crossorigin", "*");
+
+        if (s0 && s0.parentNode) {
+          s0.parentNode.insertBefore(s1, s0);
+        }
+      })();
+    `,
+  }}
+/>
+
       </body>
     </html>
   );
